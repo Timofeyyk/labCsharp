@@ -1,20 +1,33 @@
 ﻿Student st1 = new Student();
 st1.WriteInfo();
-Student st2 = new Student();
+Student st2 = new Student("Bisa",20);
 st2.WriteInfo();
+string? str="0";
 try
-{
-    string str;
+{ 
     for (int i = 0; i < 2; i++)
     {
         str = Console.ReadLine();
-        st1.Age = int.Parse(str);
+        st1.Age = int.Parse(str)-1;
         st1.BecomeOlder();
         st1.WriteInfo();
     }
 }
-catch (SystemException ex) { Console.WriteLine(ex.Message); }
+catch (SystemException ex) { Console.WriteLine("Нужно ввести цифру от 0 до 9"); }
 finally { Console.WriteLine("Конец отлова, в итоге st1 имеет данные такие: ");st1.WriteInfo(); }
+try 
+{
+    for (int i = 0; i < 2; i++)
+    {
+        str = Console.ReadLine();
+        st2.Age = int.Parse(str)-1;
+        st2.BecomeOlder();
+        st2.WriteInfo();
+        if (st2.Age == 0) { throw new Exception("Сообщние при ошибке"); }
+    }
+}
+catch(Exception e)when (str == "0"){ Console.WriteLine("str не должно быть равно 0. "+e.Message); }
+catch(Exception ex) {  Console.WriteLine("Нужно ввести цифру от 0 до 9"); }
 class Student
 {
     public String _name { get; set; }
