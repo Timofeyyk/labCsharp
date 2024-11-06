@@ -88,23 +88,48 @@ namespace lab7
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int flag = 0;
-            if (cueTextBox1.Text != "" && cueTextBox2.Text != "" && comboBox1.Text != "" && comboBox2.Text != "" && comboBox3.Text != "")
+            try
             {
-                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                int flag = 0;
+                if (cueTextBox1.Text != "" && cueTextBox2.Text != "" && comboBox1.Text != "" && comboBox2.Text != "" && comboBox3.Text != "")
                 {
-                    if (cueTextBox2.Text == dataGridView1.Rows[i].Cells[0].Value.ToString())
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        flag = 1;
+                        if (cueTextBox2.Text == dataGridView1.Rows[i].Cells[0].Value.ToString())
+                        {
+                            throw new Exception("Номер зачетной книжки повторяется");
+                        }
                     }
+                    if (cueTextBox2.Text.Length != 8)
+                    {
+                        throw new Exception("Неправильный формат зачетной книжки");
+                    }
+                    string group = string.Format("{0:####-####}", comboBox3.Text);
+                    if (group.Length <7) { throw new Exception("Введите полное название группы"); }
+                    else
+                    {
+                        for (int i = 0; i < group.Length; i++)
+                        {
+                            if (!Char.IsDigit(group[i]) && i < 3)
+                            {
+                                throw new Exception("Неправильный формат группы");
+                            }
+                            if ((group[i]!='б'&& group[i] != 'а') && i == 3)
+                            {
+                                throw new Exception("Неправильный формат группы");
+                            }
+                            if (!Char.IsLetter(group[i]) && i > 4)
+                            {
+                                throw new Exception("Неправильный формат группы");
+                            }
+                        }
+                    }
+                        dataGridView1.Rows.Add(cueTextBox2.Text, cueTextBox1.Text, comboBox1.Text, comboBox2.Text, dateTimePicker1.Value, group);
+                    
                 }
-                if (flag == 0)
-                {
-                    dataGridView1.Rows.Add(cueTextBox2.Text, cueTextBox1.Text, comboBox1.Text, comboBox2.Text, dateTimePicker1.Value, comboBox3.Text);
-                }
-                else { MessageBox.Show("Такой номер книжки уже есть","Предупреждение"); }
+                else { throw new Exception("Заполните все поля"); }
             }
-            else { MessageBox.Show("Заполните все поля", "Ошибка!"); }
+            catch(Exception ex) { MessageBox.Show(ex.Message, "Ошибка!"); }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -128,20 +153,17 @@ namespace lab7
                     int flag = 0;
                     for (int i = 0; i < dataGridView1.Rows.Count; i++)
                     {
-                        if (cueTextBox2.Text == dataGridView1.Rows[i].Cells[0].Value.ToString())
+                        if (cueTextBox2.Text == dataGridView1.Rows[i].Cells[0].Value.ToString() && dataGridView1.Rows[i].Cells[0].Value != dataGridView1.CurrentRow.Cells[0].Value)
                         {
                             flag = 1;
                         }
                     }
-                    if (flag == 0) { 
+                    if (flag == 0) {
                         if (cueTextBox1.Text != "" && cueTextBox2.Text != "" && comboBox1.Text != "" && comboBox2.Text != "" && comboBox3.Text != "")
                         {
-                            dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[0].Value = cueTextBox2.Text;
-                            dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[1].Value = cueTextBox1.Text;
-                            dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[2].Value = comboBox1.Text;
-                            dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[3].Value = comboBox2.Text;
-                            dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[4].Value = dateTimePicker1.Value;
-                            dataGridView1.Rows[dataGridView1.CurrentRow.Index].Cells[5].Value = comboBox3.Text;
+                            dataGridView1.Rows.RemoveAt(dataGridView1.CurrentRow.Index);
+                            string group = string.Format("{0:####-####}", comboBox3.Text);
+                            dataGridView1.Rows.Add(cueTextBox2.Text, cueTextBox1.Text, comboBox1.Text, comboBox2.Text, dateTimePicker1.Value, group);
                         }
                         else { MessageBox.Show("Строка не выбрана", "Ошибка!"); } 
                     }
@@ -149,6 +171,29 @@ namespace lab7
                 }
             }
             catch(Exception ex) { MessageBox.Show("Строка не выбрана", "Ошибка!"); }
+        }
+
+        private void cueTextBox2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsDigit(e.KeyChar) && cueTextBox2.Text.Length<8 || Char.IsControl(e.KeyChar))
+            {
+            }
+            else
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void cueTextBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (Char.IsLetter(e.KeyChar) || Char.IsWhiteSpace(e.KeyChar)|| Char.IsControl(e.KeyChar))
+            {
+            }
+
+            else
+            {
+                e.Handled = true;
+            }
         }
     }
 }
