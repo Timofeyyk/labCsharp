@@ -1,6 +1,6 @@
 ﻿namespace lab10
 {
-    partial class Form1
+    partial class Auth
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Auth));
             this.SuspendLayout();
             // 
             // Form1
@@ -42,6 +42,7 @@
             this.MinimizeBox = false;
             this.Name = "Form1";
             this.Text = "Аторизация";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
         }

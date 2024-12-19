@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace lab10
 {
-    public partial class Form1 : Form
+    public partial class Auth : Form
     {
-        public Form1()
+        public Auth()
         {
             InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
