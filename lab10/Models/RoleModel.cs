@@ -38,7 +38,7 @@ namespace lab10.Models
         public void DeleteRole(int RoleId) {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "DELETE FROM roles WHERE roleid = @roleid";
+                string query = "DELETE FROM roles WHERE roleId = @roleid";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@roleid", RoleId);
@@ -49,7 +49,7 @@ namespace lab10.Models
         public void UpdateRole(int RoleId,string RoleName) {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "UPDATE roles SET rolename = @rolename WHERE orderID = @roleID";
+                string query = "UPDATE roles SET rolename = @rolename WHERE roleId = @roleID";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.Clear();
                 cmd.Parameters.AddWithValue("@roleid", RoleId);
