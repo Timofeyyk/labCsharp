@@ -60,7 +60,7 @@ namespace lab2
                 {
                     try
                     {
-                        for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+                        for (int i = 0; i < dataGridView1.RowCount; i++)
                         {
                             for (int j = 0; j < dataGridView1.ColumnCount; j++)
                             {
@@ -143,7 +143,7 @@ namespace lab2
 
                     XElement cafedraElem = new XElement("Cafedra");
 
-                    for (int i = 0; i < dataGridView1.RowCount-1; i++)
+                    for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
                         XElement personElem = new XElement("person");
 
@@ -213,7 +213,7 @@ namespace lab2
                 try
                 {
                     File.WriteAllText(saveFileDialog3.FileName, String.Empty);
-                    for (int i = 0; i < dataGridView1.RowCount-1; i++)
+                    for (int i = 0; i < dataGridView1.RowCount; i++)
                     {
                         Specialists specialist = new Specialists(dataGridView1[0,i].Value.ToString(), dataGridView1[1,i].Value.ToString(), dataGridView1[2,i].Value.ToString(), dataGridView1[5,i].Value.ToString(), dataGridView1[4,i].Value.ToString(), dataGridView1[3,i].Value.ToString());
                         string JsonObject=JsonConvert.SerializeObject(specialist);
@@ -244,7 +244,7 @@ namespace lab2
         }
         public void filter(String str,int col) 
         {
-            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+            for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 
                 dataGridView1.Rows[i].Visible = false;
@@ -252,7 +252,7 @@ namespace lab2
 
             if (string.IsNullOrWhiteSpace(str))
             {
-                for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+                for (int i = 0; i < dataGridView1.RowCount; i++)
                 {
                     dataGridView1.Rows[i].Visible = true;
                 }
@@ -261,7 +261,7 @@ namespace lab2
             var values = str.Split(new char[] { ',' },
                 StringSplitOptions.RemoveEmptyEntries);
 
-            for (int i = 0; i < dataGridView1.RowCount - 1; i++)
+            for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 foreach (string value in values)
                 {
@@ -359,14 +359,17 @@ namespace lab2
         {
             if (dataGridView1.SelectedRows.Count == 1)
             {
-                dataGridView1[0, dataGridView1.CurrentRow.Index].Value =textBox1.Text;
-                dataGridView1[1, dataGridView1.CurrentRow.Index].Value =textBox4.Text ;
-                if (checkBox1.Checked==true)
-                    dataGridView1[2, dataGridView1.CurrentRow.Index].Value = "Да";
-                else dataGridView1[2, dataGridView1.CurrentRow.Index].Value = "Нет";
-                dataGridView1[3, dataGridView1.CurrentRow.Index].Value=textBox9.Text;
-                dataGridView1[4, dataGridView1.CurrentRow.Index].Value = textBox10.Text;
-                dataGridView1[5, dataGridView1.CurrentRow.Index].Value = textBox8.Text;
+                if (textBox1.Text != "" && textBox4.Text != "" && textBox9.Text != "" && textBox10.Text != "" && textBox8.Text != "")
+                {
+                    dataGridView1[0, dataGridView1.CurrentRow.Index].Value = textBox1.Text;
+                    dataGridView1[1, dataGridView1.CurrentRow.Index].Value = textBox4.Text;
+                    if (checkBox1.Checked == true)
+                        dataGridView1[2, dataGridView1.CurrentRow.Index].Value = "Да";
+                    else dataGridView1[2, dataGridView1.CurrentRow.Index].Value = "Нет";
+                    dataGridView1[3, dataGridView1.CurrentRow.Index].Value = textBox9.Text;
+                    dataGridView1[4, dataGridView1.CurrentRow.Index].Value = textBox10.Text;
+                    dataGridView1[5, dataGridView1.CurrentRow.Index].Value = textBox8.Text;
+                }
             }
         }
 

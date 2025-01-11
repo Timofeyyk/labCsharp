@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Cafedra>
+  <person>
+    <fio>йукуа</fio>
+    <departament>ыаыцуа</departament>
+    <power>Да</power>
+    <tech>ыуацуацу</tech>
+    <ide>уыаыу</ide>
+    <lang>ауыауы</lang>
+  </person>
+  <person>
+    <fio>ра</fio>
+    <departament>фа</departament>
+    <power>Нет</power>
+    <tech>уыаыуаыу</tech>
+    <ide>аыуаыыу</ide>
+    <lang>фуаууп</lang>
+  </person>
+  <person>
+    <fio>йукуа</fio>
+    <departament>ыаыцуа</departament>
+    <power>Да</power>
+    <tech>ыуацуацу</tech>
+    <ide>уыаыу</ide>
+    <lang>ауыауы</lang>
+  </person>
+</Cafedra>
