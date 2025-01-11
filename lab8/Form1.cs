@@ -20,10 +20,6 @@ namespace lab2
         {
             InitializeComponent();
         }
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
 
         private void saveFileDialog1_FileOk(object sender, CancelEventArgs e)
         {
@@ -43,7 +39,7 @@ namespace lab2
                 {
 
                     tfp.TextFieldType = FieldType.Delimited;
-                    tfp.SetDelimiters("%");
+                    tfp.SetDelimiters(",");
 
                     while (!tfp.EndOfData)
                     {
@@ -69,7 +65,7 @@ namespace lab2
                             for (int j = 0; j < dataGridView1.ColumnCount; j++)
                             {
                                 sw.Write(dataGridView1.Rows[i].Cells[j].Value.ToString());
-                                if (j < dataGridView1.ColumnCount - 1) sw.Write("%"); // не пишем пробел после последней колонки
+                                if (j < dataGridView1.ColumnCount - 1) sw.Write(","); // не пишем пробел после последней колонки
                             }
                             sw.WriteLine();
                         }
@@ -315,6 +311,70 @@ namespace lab2
         private void файлToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void dataGridView1_MouseClick(object sender, MouseEventArgs e)
+        {
+                if (dataGridView1.SelectedRows.Count == 1)
+                {
+                try
+                {
+                    for (int i = 0; i < 6; i++)
+                    {
+                        if (dataGridView1[i, dataGridView1.CurrentRow.Index].Value == null)
+                        {
+                            throw new Exception();
+                        }
+                    }
+                        textBox1.Text = dataGridView1[0, dataGridView1.CurrentRow.Index].Value.ToString();
+                        textBox4.Text = dataGridView1[1, dataGridView1.CurrentRow.Index].Value.ToString();
+                        if (dataGridView1[2, dataGridView1.CurrentRow.Index].Value.ToString() == "Да")
+                            checkBox1.Checked = true;
+                        else checkBox1.Checked = false;
+
+                        textBox9.Text = dataGridView1[3, dataGridView1.CurrentRow.Index].Value.ToString();
+                        textBox10.Text = dataGridView1[4, dataGridView1.CurrentRow.Index].Value.ToString();
+                        textBox8.Text = dataGridView1[5, dataGridView1.CurrentRow.Index].Value.ToString();
+                }
+                catch (Exception ex) {
+                    textBox1.Text = "";
+                    textBox4.Text = "";
+                    checkBox1.Checked = false;
+                    textBox9.Text = "";
+                    textBox10.Text = "";
+                    textBox8.Text = "";
+                }
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            string power = "";
+            if (checkBox1.Checked == true) power = "Да"; else power = "Нет";
+            if(textBox1.Text!=""&& textBox4.Text!="" &&textBox9.Text!="" &&textBox10.Text!="" &&textBox8.Text!="")
+            dataGridView1.Rows.Add(textBox1.Text, textBox4.Text, power, textBox9.Text, textBox10.Text, textBox8.Text);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 1)
+            {
+                dataGridView1[0, dataGridView1.CurrentRow.Index].Value =textBox1.Text;
+                dataGridView1[1, dataGridView1.CurrentRow.Index].Value =textBox4.Text ;
+                if (checkBox1.Checked==true)
+                    dataGridView1[2, dataGridView1.CurrentRow.Index].Value = "Да";
+                else dataGridView1[2, dataGridView1.CurrentRow.Index].Value = "Нет";
+                dataGridView1[3, dataGridView1.CurrentRow.Index].Value=textBox9.Text;
+                dataGridView1[4, dataGridView1.CurrentRow.Index].Value = textBox10.Text;
+                dataGridView1[5, dataGridView1.CurrentRow.Index].Value = textBox8.Text;
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 1) {
+                dataGridView1.Rows.Remove(dataGridView1.CurrentRow);
+            }
         }
     }
     public class Specialists
